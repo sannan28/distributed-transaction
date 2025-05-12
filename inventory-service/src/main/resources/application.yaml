@@ -1,0 +1,46 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://192.168.64.14:3307/inventory-service?characterEncoding=utf8&connectTimeout=1000&socketTimeout=30000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+  application:
+    name: inventory-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.64.14:8848
+        username: nacos
+        password: nacos
+
+  redis:
+    host: 192.168.64.14
+    port: 6379
+    connect-timeout: 3000
+
+server:
+  port: 8030
+
+dubbo:
+  registry:
+    address: nacos://192.168.64.14:8848
+  consumer:
+    timeout: 5000
+  protocol:
+    port: 20881
+
+
+seata:
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 192.168.64.14:8848
+      group: DEFAULT_GROUP
+      namespace: ""
+      username: nacos
+      password: nacos
+  tx-service-group: inventory_tx_group
+  service:
+    vgroup-mapping:
+      inventory_tx_group: default

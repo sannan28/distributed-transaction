@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    password: root
+    username: root
+    url: jdbc:mysql://192.168.64.14:3307/order-service?characterEncoding=utf8&connectTimeout=1000&socketTimeout=30000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: order-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.64.14:8848
+        username: nacos
+        password: nacos
+server:
+  port: 8020
+
+dubbo:
+  registry:
+    address: nacos://192.168.64.14:8848
+  consumer:
+    timeout: 3000
+  protocol:
+    port: 20880
+
+seata:
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 192.168.64.14:8848
+      group: DEFAULT_GROUP
+      namespace: ""
+      username: nacos
+      password: nacos
+  tx-service-group: order_tx_group
+  service:
+    vgroup-mapping:
+      order_tx_group: default
+

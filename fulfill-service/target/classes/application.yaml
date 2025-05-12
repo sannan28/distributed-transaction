@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: distributed-transaction-api
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.64.14:8848
+        username: nacos
+        password: nacos
+server:
+  port: 8090
+
+dubbo:
+  registry:
+    address: nacos://192.168.64.14:8848
+  consumer:
+    timeout: 3000
+  protocol:
+    port: 20882
+
+seata:
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 192.168.64.14:8848
+      group: DEFAULT_GROUP
+      namespace: ""
+      username: nacos
+      password: nacos
+  tx-service-group: default_tx_group
+  service:
+    vgroup-mapping:
+      default_tx_group: default
